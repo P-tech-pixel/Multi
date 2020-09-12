@@ -17,105 +17,105 @@ class App extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            books: [],
-            filteredBooks: [],
-            newBookData: {
-                title: '',
-                rating: ''
+            customers: [],
+            filteredCustomers: [],
+            newCustomerData: {
+                name: '',
+                email: ''
             },
             searchData: {
-                title: ''
+                name: ''
             },
-            editBookData: {
+            editCustomerData: {
                 id: '',
-                title: '',
-                rating: ''
+                name: '',
+                email: ''
             },
-            newBookModal: false,
-            editBookModal: false
+            newCustomerModal: false,
+            editCustomerModal: false
         };
 
         this.temp = '123';
     }
     componentDidMount() {
-      this._refreshBooks();
+      this._refreshCustomers();
     }
 
-    toggleNewBookModal() {
+    toggleNewCustomerModal() {
         this.setState({
-            newBookModal: !this.state.newBookModal
+            newCustomerModal: !this.state.newCustomerModal
         });
     }
 
-    addBook() {
-        axios.post('http://localhost:3000/book', this.state.newBookData).then(res => {
-            let { books } = this.state;
-            books.push(res.data);
-            this.setState({ books, newBookModal: false, newBookData: {
-              title: '',
-              rating: ''
+    addCustomer() {
+        axios.post('http://localhost:3000/book', this.state.newCustomerData).then(res => {
+            let { customers } = this.state;
+            customers.push(res.data);
+            this.setState({ customers, newCustomerModal: false, newCustomerData: {
+              name: '',
+              email: ''
             } });
         });
     }
-    toggleEditBookModal() {
+    toggleEditCustomerModal() {
         this.setState({
-            editBookModal: !this.state.editBookModal
+            editCustomerModal: !this.state.editCustomerModal
         });
     }
-    editBook(id, title, rating) {
+    editCustomer(id, name, email) {
         this.setState({
-            editBookData: { id, title, rating },
-            editBookModal: !this.state.editBookModal
+            editCustomerData: { id, name, email },
+            editCustomerModal: !this.state.editCustomerModal
         });
     }
-    updateBook() {
-        let { title, rating } = this.state.editBookData;
+    updateCustomer() {
+        let { name, email } = this.state.editCustomerData;
         axios
-            .put('http://localhost:3000/book/' + this.state.editBookData.id, {
-                title,
-                rating
+            .put('http://localhost:3000/book/' + this.state.editCustomerData.id, {
+                name,
+                email
             })
             .then(response => {
-                this._refreshBooks();
-                this.setState({editBookModal: false, editBookData: {id:'', title:'', rating:''}})
+                this._refreshCusromers();
+                this.setState({editCustomerModal: false, editCustomerData: {id:'', name:'', email:''}})
             });
     }
 
-    deleteBook(id) {
+    deleteCustomer(id) {
         axios.delete('http://localhost:3000/book/' + id).then(response => {
-            this._refreshBooks();
+            this._refreshCustomers();
         });
     }
-    _refreshBooks() {
+    _refreshCustomers() {
          axios.get('http://localhost:3000/book').then(res => {
             this.setState({
-                books: res.data
+                customers: res.data
             });
         });
     }
     render() {
         let result;
-        if (this.state.filteredBooks.length !== 0) {
-            result = this.state.filteredBooks;
+        if (this.state.filteredCustomers.length !== 0) {
+            result = this.state.filteredCustomers;
         } else {
-            result = this.state.books;
+            result = this.state.customers;
         }
-        let books = result.map(book => {
+        let customers = result.map(customer => {
             return (
-                <tr key={book.id}>
-                    <td className='col-2'>{book.id}</td>
-                    <td className='col-3'>{book.title}</td>
-                    <td className='col-3'>{book.rating}</td>
-                    <td className='col-4'>
+                <tr key={customer.id}>
+                    <td className='col-2'>{customer.id}</td>
+                    <td className='col-3'>{customer.name}</td>
+                    <td className='col-4'>{customer.email}</td>
+                    <td className='col-3'>
                         <Button
                             color="warning"
                             size="sm"
                             className="mr-2"
-                            onClick={this.editBook.bind(this, book.id, book.title, book.rating)}
+                            onClick={this.editCustomer.bind(this, customer.id, customer.name, customer.email)}
                         >
                             Edit
                         </Button>{' '}
-                        <Button color="danger" size="sm" onClick={() => this.deleteBook(book.id)}>
+                        <Button color="danger" size="sm" onClick={() => this.deleteCustomer(customer.id)}>
                             Delete
                         </Button>
                     </td>
@@ -129,7 +129,7 @@ class App extends Component {
                     className="my-3 btn-block"
                     id='addBtn'
                     color="primary"
-                    onClick={this.toggleNewBookModal.bind(this)}
+                    onClick={this.toggleNewCustomerModal.bind(this)}
                 >
                     + Add Customer Details
                 </Button>{' '}
@@ -139,8 +139,8 @@ class App extends Component {
                         placeholder="Search customer by their names..."
                         onChange={e => {
                             this.setState({
-                                filteredBooks: this.state.books.filter(book => {
-                                    return book.title.indexOf(e.target.value) !== -1;
+                                filteredCustomers: this.state.customers.filter(customer => {
+                                    return customer.name.indexOf(e.target.value) !== -1;
                                 })
                             });
                         }}
@@ -154,17 +154,17 @@ class App extends Component {
                     className="my-3 btn-block"
                     color="info"
                     onClick={e => {
-                        this.state.books.sort((a, b) => {
-                            if (a.title > b.title) {
+                        this.state.customers.sort((a, b) => {
+                            if (a.name > b.name) {
                                 return 1;
-                            } else if (a.title < b.title) {
+                            } else if (a.name < b.name) {
                                 return -1;
                             } else {
                                 return 0;
                             }
                         });
                         this.setState({
-                            filteredBooks: this.state.books
+                            filteredCustomers: this.state.customers
                         });
                     }}
                 >
@@ -174,17 +174,17 @@ class App extends Component {
                     className="my-3 btn-block"
                     color="info"
                     onClick={e => {
-                        this.state.books.sort((a, b) => {
-                            if (a.title > b.title) {
+                        this.state.customers.sort((a, b) => {
+                            if (a.name > b.name) {
                                 return -1;
-                            } else if (a.title < b.title) {
+                            } else if (a.name < b.name) {
                                 return 1;
                             } else {
                                 return 0;
                             }
                         });
                         this.setState({
-                            filteredBooks: this.state.books
+                            filteredCustomers: this.state.customers
                         });
                     }}
                 >
@@ -194,17 +194,17 @@ class App extends Component {
                     className="my-3 btn-block"
                     color="secondary"
                     onClick={e => {
-                        this.state.books.sort((a, b) => {
-                            if (a.rating > b.rating) {
+                        this.state.customers.sort((a, b) => {
+                            if (a.email > b.email) {
                                 return 1;
-                            } else if (a.rating < b.rating) {
+                            } else if (a.email < b.email) {
                                 return -1;
                             } else {
                                 return 0;
                             }
                         });
                         this.setState({
-                            filteredBooks: this.state.books
+                            filteredCustomers: this.state.customers
                         });
                     }}
                 >
@@ -214,17 +214,17 @@ class App extends Component {
                     className="my-3 btn-block"
                     color="secondary"
                     onClick={e => {
-                        this.state.books.sort((a, b) => {
-                            if (a.rating > b.rating) {
+                        this.state.customers.sort((a, b) => {
+                            if (a.email > b.email) {
                                 return -1;
-                            } else if (a.rating < b.rating) {
+                            } else if (a.email < b.email) {
                                 return 1;
                             } else {
                                 return 0;
                             }
                         });
                         this.setState({
-                            filteredBooks: this.state.books
+                            filteredCustomers: this.state.customers
                         });
                     }}
                 >
@@ -232,19 +232,19 @@ class App extends Component {
                 </Button>{' '}
                     </div>
                     <div className='col-10 '>
-                    
+                    <p>Scroll the below table to view more data.</p>
                     <Table className='table table-striped table-fixed' > 
                     
                     <thead>
                         <tr>
                             <th className='col-2'>Customer ID</th>
                             <th className='col-3'>Customer Name</th>
-                            <th className='col-3' >Rating</th>
-                            <th className='col-4' >Actions</th>
+                            <th className='col-4' >Email</th>
+                            <th className='col-3' >Actions</th>
                         </tr>
                     </thead >
                        <tbody >
-                         {books}
+                         {customers}
                        </tbody>
         
                     </Table>
@@ -253,83 +253,83 @@ class App extends Component {
                   </div>
                 </div>
 
-                <Modal isOpen={this.state.newBookModal} toggle={this.toggleNewBookModal.bind(this)}>
-                    <ModalHeader toggle={this.toggleNewBookModal.bind(this)}>
+                <Modal isOpen={this.state.newCustomerModal} toggle={this.toggleNewCustomerModal.bind(this)}>
+                    <ModalHeader toggle={this.toggleNewCustomerModal.bind(this)}>
                         Add a new customer
                     </ModalHeader>
                     <ModalBody>
                         <FormGroup>
-                            <Label for="title">Title</Label>
+                            <Label for="name">Name</Label>
                             <Input
-                                id="title"
-                                value={this.state.newBookData.title}
+                                id="name"
+                                value={this.state.newCustomerData.name}
                                 onChange={e => {
-                                    let { newBookData } = this.state;
-                                    newBookData.title = e.target.value;
-                                    this.setState({ newBookData });
+                                    let { newCustomerData } = this.state;
+                                    newCustomerData.name = e.target.value;
+                                    this.setState({ newCustomerData });
                                 }}
                             />
                         </FormGroup>
                         <FormGroup>
-                            <Label for="rating">Rating</Label>
+                            <Label for="email">Email</Label>
                             <Input
-                                id="rating"
-                                value={this.state.newBookData.rating}
+                                id="email"
+                                value={this.state.newCustomerData.email}
                                 onChange={e => {
-                                    let { newBookData } = this.state;
-                                    newBookData.rating = e.target.value;
-                                    this.setState({ newBookData });
+                                    let { newCustomerData } = this.state;
+                                    newCustomerData.email = e.target.value;
+                                    this.setState({ newCustomerData });
                                 }}
                             />
                         </FormGroup>
                     </ModalBody>
                     <ModalFooter>
-                        <Button color="primary" onClick={this.addBook.bind(this)}>
+                        <Button color="primary" onClick={this.addCustomer.bind(this)}>
                             Add
                         </Button>{' '}
-                        <Button color="secondary" onClick={this.toggleNewBookModal.bind(this)}>
+                        <Button color="secondary" onClick={this.toggleNewCustomerModal.bind(this)}>
                             Cancel
                         </Button>
                     </ModalFooter>
                 </Modal>
                 <Modal
-                    isOpen={this.state.editBookModal}
-                    toggle={this.toggleEditBookModal.bind(this)}
+                    isOpen={this.state.editCustomerModal}
+                    toggle={this.toggleEditCustomerModal.bind(this)}
                 >
-                    <ModalHeader toggle={this.toggleEditBookModal.bind(this)}>
+                    <ModalHeader toggle={this.toggleEditCustomerModal.bind(this)}>
                         Edit customer detail
                     </ModalHeader>
                     <ModalBody>
                         <FormGroup>
-                            <Label for="title">Title</Label>
+                            <Label for="name">Name</Label>
                             <Input
-                                id="title"
-                                value={this.state.editBookData.title}
+                                id="name"
+                                value={this.state.editCustomerData.name}
                                 onChange={e => {
-                                    let { editBookData } = this.state;
-                                    editBookData.title = e.target.value;
-                                    this.setState({ editBookData });
+                                    let { editCustomerData } = this.state;
+                                    editCustomerData.title = e.target.value;
+                                    this.setState({ editCustomerData });
                                 }}
                             />
                         </FormGroup>
                         <FormGroup>
-                            <Label for="rating">Rating</Label>
+                            <Label for="email">Email</Label>
                             <Input
-                                id="rating"
-                                value={this.state.editBookData.rating}
+                                id="email"
+                                value={this.state.editCustomerData.email}
                                 onChange={e => {
-                                    let { editBookData } = this.state;
-                                    editBookData.rating = e.target.value;
-                                    this.setState({ editBookData });
+                                    let { editCustomerData } = this.state;
+                                    editCustomerData.email = e.target.value;
+                                    this.setState({ editCustomerData });
                                 }}
                             />
                         </FormGroup>
                     </ModalBody>
                     <ModalFooter>
-                        <Button color="primary" onClick={this.updateBook.bind(this)}>
+                        <Button color="primary" onClick={this.updateCustomer.bind(this)}>
                             Update 
                         </Button>{' '}
-                        <Button color="secondary" onClick={this.toggleEditBookModal.bind(this)}>
+                        <Button color="secondary" onClick={this.toggleEditCustomerModal.bind(this)}>
                             Cancel
                         </Button>
                     </ModalFooter>

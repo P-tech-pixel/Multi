@@ -13,6 +13,7 @@
   }
   .table-fixed thead {
     width: 97%;
+    color:black;
   }
   .table-fixed tbody {
     height: 300px;
