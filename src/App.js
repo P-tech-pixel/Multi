@@ -21,7 +21,8 @@ class App extends Component {
             filteredCustomers: [],
             newCustomerData: {
                 name: '',
-                email: ''
+                email: '',
+                phone: ''
             },
             searchData: {
                 name: ''
@@ -29,7 +30,8 @@ class App extends Component {
             editCustomerData: {
                 id: '',
                 name: '',
-                email: ''
+                email: '',
+                phone: ''
             },
             newCustomerModal: false,
             editCustomerModal: false
@@ -53,7 +55,8 @@ class App extends Component {
             customers.push(res.data);
             this.setState({ customers, newCustomerModal: false, newCustomerData: {
               name: '',
-              email: ''
+              email: '',
+              phone: ''
             } });
         });
     }
@@ -62,22 +65,23 @@ class App extends Component {
             editCustomerModal: !this.state.editCustomerModal
         });
     }
-    editCustomer(id, name, email) {
+    editCustomer(id, name, email, phone) {
         this.setState({
-            editCustomerData: { id, name, email },
+            editCustomerData: { id, name, email, phone },
             editCustomerModal: !this.state.editCustomerModal
         });
     }
     updateCustomer() {
-        let { name, email } = this.state.editCustomerData;
+        let { name, email, phone } = this.state.editCustomerData;
         axios
             .put('http://localhost:3000/book/' + this.state.editCustomerData.id, {
                 name,
-                email
+                email,
+                phone
             })
             .then(response => {
-                this._refreshCusromers();
-                this.setState({editCustomerModal: false, editCustomerData: {id:'', name:'', email:''}})
+                this._refreshCustomers();
+                this.setState({editCustomerModal: false, editCustomerData: {id:'', name:'', email:'', phone: ''}})
             });
     }
 
@@ -104,14 +108,15 @@ class App extends Component {
             return (
                 <tr key={customer.id}>
                     <td className='col-2'>{customer.id}</td>
-                    <td className='col-3'>{customer.name}</td>
+                    <td className='col-2'>{customer.name}</td>
                     <td className='col-4'>{customer.email}</td>
-                    <td className='col-3'>
+                    <td className='col-2'>{customer.phone}</td>
+                    <td className='col-2'>
                         <Button
                             color="warning"
                             size="sm"
                             className="mr-2"
-                            onClick={this.editCustomer.bind(this, customer.id, customer.name, customer.email)}
+                            onClick={this.editCustomer.bind(this, customer.id, customer.name, customer.email, customer.phone)}
                         >
                             Edit
                         </Button>{' '}
@@ -122,9 +127,29 @@ class App extends Component {
                 </tr>
             );
         });
+        // main render return ....
         return (
             <div className="App container">
-                <h1>Customer Details</h1>
+                  <nav className="navbar navbar-dark navbar-expand-sm fixed-top">
+                  <ul className="navbar-nav mr-auto">
+                        <li className="nav-item active"><a class="nav-link" href="#"><span class="fa fa-home fa-lg"></span> Home</a></li>
+                        <li className="nav-item"><a class="nav-link" href="./aboutus.html"><span class="fa fa-info fa-lg"></span> About</a></li>
+                        <li className="nav-item"><a class="nav-link" href="./contactus.html"><span class="fa fa-list fa-lg"></span> Menu</a></li>
+                        <li className="nav-item "><a class="nav-link" href="#"><span class="fa fa-address-card fa-lg"></span> Contact</a></li>
+                </ul>
+                <span className="navbar-text">
+                    <button id='loginBtn' type="button" class="btn header-button" data-toggle="modal" href="#loginModel">Login</button>
+                </span>
+                </nav>
+              <header className= "jumbotron">
+                 <div className= "container">
+                    <div className= "row row-header">
+                      <div className="col-6 col-sm-6">
+                         <h1>Customer Details</h1>
+                      </div>
+                    </div>
+               </div>
+            </header>
                 <Button
                     className="my-3 btn-block"
                     id='addBtn'
@@ -195,9 +220,9 @@ class App extends Component {
                     color="secondary"
                     onClick={e => {
                         this.state.customers.sort((a, b) => {
-                            if (a.email > b.email) {
+                            if (a.phone > b.phone) {
                                 return 1;
-                            } else if (a.email < b.email) {
+                            } else if (a.phone < b.phone) {
                                 return -1;
                             } else {
                                 return 0;
@@ -215,9 +240,9 @@ class App extends Component {
                     color="secondary"
                     onClick={e => {
                         this.state.customers.sort((a, b) => {
-                            if (a.email > b.email) {
+                            if (a.phone > b.phone) {
                                 return -1;
-                            } else if (a.email < b.email) {
+                            } else if (a.phone < b.phone) {
                                 return 1;
                             } else {
                                 return 0;
@@ -238,9 +263,10 @@ class App extends Component {
                     <thead>
                         <tr>
                             <th className='col-2'>Customer ID</th>
-                            <th className='col-3'>Customer Name</th>
+                            <th className='col-2'>Customer Name</th>
                             <th className='col-4' >Email</th>
-                            <th className='col-3' >Actions</th>
+                            <th className='col-2' >Phone Number</th>
+                            <th className='col-2' >Actions</th>
                         </tr>
                     </thead >
                        <tbody >
@@ -278,6 +304,18 @@ class App extends Component {
                                 onChange={e => {
                                     let { newCustomerData } = this.state;
                                     newCustomerData.email = e.target.value;
+                                    this.setState({ newCustomerData });
+                                }}
+                            />
+                        </FormGroup>
+                        <FormGroup>
+                            <Label for="phone">Phone Number</Label>
+                            <Input
+                                id="phone"
+                                value={this.state.newCustomerData.phone}
+                                onChange={e => {
+                                    let { newCustomerData } = this.state;
+                                    newCustomerData.phone = e.target.value;
                                     this.setState({ newCustomerData });
                                 }}
                             />
@@ -320,6 +358,18 @@ class App extends Component {
                                 onChange={e => {
                                     let { editCustomerData } = this.state;
                                     editCustomerData.email = e.target.value;
+                                    this.setState({ editCustomerData });
+                                }}
+                            />
+                        </FormGroup>
+                        <FormGroup>
+                            <Label for="phone">Phone</Label>
+                            <Input
+                                id="phone"
+                                value={this.state.editCustomerData.phone}
+                                onChange={e => {
+                                    let { editCustomerData } = this.state;
+                                    editCustomerData.phone = e.target.value;
                                     this.setState({ editCustomerData });
                                 }}
                             />

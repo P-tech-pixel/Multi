@@ -6,7 +6,7 @@
   background-color: #305a7c;
 }
 .App{
-    padding-top: 50px;
+    padding-top: 100px;
 }
   .table-wrapper-scroll-y {
   display: block;
@@ -27,5 +27,14 @@
     float: left;
     border-bottom-width: 0;
   }
-
-  
+  .jumbotron{
+    padding: 70px 30px 70px 30px;
+    margin: 0px auto;
+    height: 20px;
+  }
+  .navbar-dark{
+    background-color:#105288;
+}
+#loginBtn{
+  color: white ;
+}
