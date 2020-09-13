@@ -50,7 +50,7 @@ class App extends Component {
     }
 
     addCustomer() {
-        axios.post('http://localhost:3000/book', this.state.newCustomerData).then(res => {
+        axios.post('http://localhost:3000/customer', this.state.newCustomerData).then(res => {
             let { customers } = this.state;
             customers.push(res.data);
             this.setState({ customers, newCustomerModal: false, newCustomerData: {
@@ -74,7 +74,7 @@ class App extends Component {
     updateCustomer() {
         let { name, email, phone } = this.state.editCustomerData;
         axios
-            .put('http://localhost:3000/book/' + this.state.editCustomerData.id, {
+            .put('http://localhost:3000/customer/' + this.state.editCustomerData.id, {
                 name,
                 email,
                 phone
@@ -86,12 +86,12 @@ class App extends Component {
     }
 
     deleteCustomer(id) {
-        axios.delete('http://localhost:3000/book/' + id).then(response => {
+        axios.delete('http://localhost:3000/customer/' + id).then(response => {
             this._refreshCustomers();
         });
     }
     _refreshCustomers() {
-         axios.get('http://localhost:3000/book').then(res => {
+         axios.get('http://localhost:3000/customer').then(res => {
             this.setState({
                 customers: res.data
             });
@@ -107,23 +107,27 @@ class App extends Component {
         let customers = result.map(customer => {
             return (
                 <tr key={customer.id}>
-                    <td className='col-2'>{customer.id}</td>
-                    <td className='col-2'>{customer.name}</td>
-                    <td className='col-4'>{customer.email}</td>
-                    <td className='col-2'>{customer.phone}</td>
-                    <td className='col-2'>
-                        <Button
-                            color="warning"
-                            size="sm"
-                            className="mr-2"
-                            onClick={this.editCustomer.bind(this, customer.id, customer.name, customer.email, customer.phone)}
-                        >
-                            Edit
-                        </Button>{' '}
-                        <Button color="danger" size="sm" onClick={() => this.deleteCustomer(customer.id)}>
-                            Delete
-                        </Button>
-                    </td>
+                    <div className='container'>
+                        <div className='row'>
+                           <td className='col-2'>{customer.id}</td>
+                           <td className='col-2'>{customer.name}</td>
+                           <td className='col-4'>{customer.email}</td>
+                           <td className='col-2'>{customer.phone}</td>
+                           <td className='col-2'>
+                             <Button
+                               color="warning"
+                               size="sm"
+                               className="mr-2"
+                               onClick={this.editCustomer.bind(this, customer.id, customer.name, customer.email, customer.phone)}
+                             >
+                               Edit
+                             </Button>{' '}
+                             <Button color="danger" size="sm" onClick={() => this.deleteCustomer(customer.id)}>
+                               Delete
+                            </Button>
+                           </td>
+                        </div>
+                    </div>
                 </tr>
             );
         });
@@ -132,10 +136,8 @@ class App extends Component {
             <div className="App container">
                   <nav className="navbar navbar-dark navbar-expand-sm fixed-top">
                   <ul className="navbar-nav mr-auto">
-                        <li className="nav-item active"><a class="nav-link" href="#"><span class="fa fa-home fa-lg"></span> Home</a></li>
-                        <li className="nav-item"><a class="nav-link" href="./aboutus.html"><span class="fa fa-info fa-lg"></span> About</a></li>
-                        <li className="nav-item"><a class="nav-link" href="./contactus.html"><span class="fa fa-list fa-lg"></span> Menu</a></li>
-                        <li className="nav-item "><a class="nav-link" href="#"><span class="fa fa-address-card fa-lg"></span> Contact</a></li>
+                        <li className="nav-item active"><a class="nav-link" href="#"><span class="fa fa-home fa-lg"></span>Multi Dynamic Marketing Campaign</a></li>
+                     
                 </ul>
                 <span className="navbar-text">
                     <button id='loginBtn' type="button" class="btn header-button" data-toggle="modal" href="#loginModel">Login</button>
@@ -146,8 +148,8 @@ class App extends Component {
                     <div className= "row row-header">
                       <div className="col-6 col-sm-6">
                          <h1>Customer Details</h1>
-                      </div>
                     </div>
+                   </div>
                </div>
             </header>
                 <Button
@@ -255,18 +257,22 @@ class App extends Component {
                 >
                     Sort by Phone Number  DESC
                 </Button>{' '}
-                    </div>
+                </div>
                     <div className='col-10 '>
                     <p>Scroll the below table to view more data.</p>
                     <Table className='table table-striped table-fixed' > 
                     
                     <thead>
                         <tr>
-                            <th className='col-2'>Customer ID</th>
-                            <th className='col-2'>Customer Name</th>
-                            <th className='col-4' >Email</th>
-                            <th className='col-2' >Phone Number</th>
-                            <th className='col-2' >Actions</th>
+                            <div className='container'>
+                                <div className='row'>
+                                   <th className='col-2'>Customer ID</th>
+                                   <th className='col-2'>Customer Name</th>
+                                   <th className='col-4' >Email</th>
+                                   <th className='col-2' >Phone Number</th>
+                                   <th className='col-2' >Actions</th>
+                                </div>
+                            </div>
                         </tr>
                     </thead >
                        <tbody >
@@ -277,7 +283,9 @@ class App extends Component {
                     
                     </div>
                   </div>
+                  
                 </div>
+                
 
                 <Modal isOpen={this.state.newCustomerModal} toggle={this.toggleNewCustomerModal.bind(this)}>
                     <ModalHeader toggle={this.toggleNewCustomerModal.bind(this)}>
@@ -338,14 +346,14 @@ class App extends Component {
                         Edit customer detail
                     </ModalHeader>
                     <ModalBody>
-                        <FormGroup>
+                    <FormGroup>
                             <Label for="name">Name</Label>
                             <Input
                                 id="name"
                                 value={this.state.editCustomerData.name}
                                 onChange={e => {
                                     let { editCustomerData } = this.state;
-                                    editCustomerData.title = e.target.value;
+                                    editCustomerData.name = e.target.value;
                                     this.setState({ editCustomerData });
                                 }}
                             />
@@ -384,7 +392,7 @@ class App extends Component {
                         </Button>
                     </ModalFooter>
                 </Modal>
-                
+                <nav className="navbar navbar-dark navbar-expand-sm fixed-bottom"></nav>
             </div>
         );
     }
