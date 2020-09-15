@@ -38,3 +38,12 @@
 #loginBtn{
   color: white ;
 }
+.sortBtn{
+  width: 90px;
+  height: 55px;
+  font-size: x-small;
+  margin: -10px;
+}
+#para{
+  text-align: center;
+}

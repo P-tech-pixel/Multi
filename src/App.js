@@ -22,7 +22,8 @@ class App extends Component {
             newCustomerData: {
                 name: '',
                 email: '',
-                phone: ''
+                phone: '',
+                checked: false
             },
             searchData: {
                 name: ''
@@ -56,7 +57,8 @@ class App extends Component {
             this.setState({ customers, newCustomerModal: false, newCustomerData: {
               name: '',
               email: '',
-              phone: ''
+              phone: '',
+              checked: false
             } });
         });
     }
@@ -109,7 +111,8 @@ class App extends Component {
                 <tr key={customer.id}>
                     <div className='container'>
                         <div className='row'>
-                           <td className='col-2'>{customer.id}</td>
+                           <td className='col-1'><input type='checkbox' value={customer.checked} /></td>
+                           <td className='col-1'>{customer.id}</td>
                            <td className='col-2'>{customer.name}</td>
                            <td className='col-4'>{customer.email}</td>
                            <td className='col-2'>{customer.phone}</td>
@@ -117,7 +120,7 @@ class App extends Component {
                              <Button
                                color="warning"
                                size="sm"
-                               className="mr-2"
+                               className="mr-2 "
                                onClick={this.editCustomer.bind(this, customer.id, customer.name, customer.email, customer.phone)}
                              >
                                Edit
@@ -134,11 +137,12 @@ class App extends Component {
         // main render return ....
         return (
             <div className="App container">
+               <div className='col'> 
                   <nav className="navbar navbar-dark navbar-expand-sm fixed-top">
                   <ul className="navbar-nav mr-auto">
-                        <li className="nav-item active"><a class="nav-link" href="#"><span class="fa fa-home fa-lg"></span>Multi Dynamic Marketing Campaign</a></li>
+                        <li className="nav-item active"><a class="nav-link" href="#"><span class="fa fa-home fa-lg"></span>Multi Dynamic </a></li>
                      
-                </ul>
+                 </ul>
                 <span className="navbar-text">
                     <button id='loginBtn' type="button" class="btn header-button" data-toggle="modal" href="#loginModel">Login</button>
                 </span>
@@ -151,7 +155,7 @@ class App extends Component {
                     </div>
                    </div>
                </div>
-            </header>
+              </header>
                 <Button
                     className="my-3 btn-block"
                     id='addBtn'
@@ -173,12 +177,12 @@ class App extends Component {
                         }}
                     />
                 </FormGroup>
-                <div className='container-fluid'>
+                <div className='container'>
                   <div className='row'>
                     
-                    <div className='col-2'>
+                    <div className='col-1'>
                 <Button
-                    className="my-3 btn-block"
+                    className="my-3 btn-block sortBtn"
                     color="info"
                     onClick={e => {
                         this.state.customers.sort((a, b) => {
@@ -198,7 +202,7 @@ class App extends Component {
                     Sort by Name ASC
                 </Button>{' '}
                 <Button
-                    className="my-3 btn-block"
+                    className="my-3 btn-block sortBtn"
                     color="info"
                     onClick={e => {
                         this.state.customers.sort((a, b) => {
@@ -218,7 +222,7 @@ class App extends Component {
                     Sort by Name DESC
                 </Button>{' '}
                 <Button
-                    className="my-3 btn-block"
+                    className="my-3 btn-block sortBtn"
                     color="secondary"
                     onClick={e => {
                         this.state.customers.sort((a, b) => {
@@ -238,7 +242,7 @@ class App extends Component {
                     Sort by Phone Number ASC
                 </Button>{' '}
                 <Button
-                    className="my-3 btn-block"
+                    className="my-3 btn-block sortBtn"
                     color="secondary"
                     onClick={e => {
                         this.state.customers.sort((a, b) => {
@@ -256,17 +260,19 @@ class App extends Component {
                     }}
                 >
                     Sort by Phone Number  DESC
-                </Button>{' '}
+                 </Button>{' '} 
+
                 </div>
-                    <div className='col-10 '>
-                    <p>Scroll the below table to view more data.</p>
+                    <div className='col-11 '>
+                    <p id='para'>Scroll the below table to view more data.</p>
                     <Table className='table table-striped table-fixed' > 
                     
                     <thead>
                         <tr>
                             <div className='container'>
                                 <div className='row'>
-                                   <th className='col-2'>Customer ID</th>
+                                   <th className='col-1'>Select</th>
+                                   <th className='col-1'>Customer ID</th>
                                    <th className='col-2'>Customer Name</th>
                                    <th className='col-4' >Email</th>
                                    <th className='col-2' >Phone Number</th>
@@ -393,6 +399,7 @@ class App extends Component {
                     </ModalFooter>
                 </Modal>
                 <nav className="navbar navbar-dark navbar-expand-sm fixed-bottom"></nav>
+              </div>
             </div>
         );
     }
