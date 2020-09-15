@@ -1,5 +1,6 @@
 import React, { Component} from 'react'
 import { Redirect } from 'react-router-dom'
+import './login.css'
 
 class Login extends Component{
     constructor(props){
@@ -43,15 +44,68 @@ render(){
 
     return(
         <div>
-             <h1> Login </h1>
-             <form onSubmit ={this.submitForm}>
-                 
-                 <input type='text' placeholder='username' name='username' value={this.state.username} onChange={this.onChange}/>
-                 <br/>
-                 <input type='password' placeholder='password' name='password' value={this.state.password} onChange={this.onChange}/>
-                 <br/>
-                 <input type='submit' />
-             </form>
+                <nav className="navbar navbar-dark navbar-expand-sm fixed-top">
+                  <ul className="navbar-nav mr-auto">
+                        <li className="nav-item active"><a class="nav-link" href="#"><span className="fa fa-home fa-lg"></span>111IT Marketing </a></li>
+                 </ul>
+                </nav>
+                    <div>
+
+                        
+                             {/* <h1> Login </h1>
+                              <form onSubmit ={this.submitForm}>
+                                  <div className='form-group'>
+                                      <label for='inputEmail'>User Name</label>
+                                      <input type='text' className='form-control' placeholder='username' name='username' value={this.state.username} onChange={this.onChange}/>
+                                  </div>
+                                  <div className='form-group'>
+                                      <label for='inputPassword'>Password</label>
+                                      <input type='password' className='form-control' placeholder='password' name='password' value={this.state.password} onChange={this.onChange}/>   
+                                  </div>
+                                  <div className='form-group'>
+                                      <button className="my-3 btn-block" color='primary' type='submit' >Sign in </button>
+                                  </div>
+                           
+                             </form> */}
+
+                            <div className="container">
+                                <div className="row">
+                                <div className="col-sm-9 col-md-7 col-lg-5 mx-auto">
+                                    <div id='card-form' claseName="card card-signin my-5">
+                                    <div className="card-body">
+                                        <h4 className="card-title text-center">Sign In</h4>
+                                        <form className="form-signin" onSubmit ={this.submitForm}>
+                                        <div className="form-label-group">
+                                            <label for="inputEmail">Email address</label><br/><br/>
+                                            <input type="email" id="inputEmail" className="form-control" name='username' value={this.state.username} onChange={this.onChange} placeholder="Email address" required autofocus />
+                                        </div>
+
+                                        <div className="form-label-group">
+                                            <label for="inputPassword">Password</label><br/><br/>
+                                            <input type="password" id="inputPassword" className="form-control" name='password' value={this.state.password} onChange={this.onChange} placeholder="Password" required />
+                                        </div>
+
+                                        <div className="custom-control custom-checkbox mb-3">
+                                            <input type="checkbox" className="custom-control-input" id="customCheck1" />
+                                            <label className="custom-control-label" for="customCheck1">Remember password</label>
+                                        </div>
+                                        <button className="btn btn-lg btn-primary btn-block text-uppercase" type="submit">Sign in</button>
+                                        <hr className="my-4"/>
+                                      
+                                        </form>
+                                    </div>
+                                    </div>
+                                </div>
+                                </div>
+                            </div>
+                    </div>
+               
+            
+            <nav className="navbar navbar-dark navbar-expand-sm fixed-bottom">
+                    <footer id='foot'> 
+                         <small>&copy; Copyright 2020, All right reserved </small> 
+                    </footer>
+            </nav>
         </div>
     )
 }

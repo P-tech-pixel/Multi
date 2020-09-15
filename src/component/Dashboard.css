@@ -47,6 +47,8 @@
 #para{
   text-align: center;
 }
-.footer{
+#foot{
     color: white;
+    text-align: center;
+    padding-left: 600px;
 }

@@ -24,6 +24,7 @@ class App extends Component {
         if(token == null){
             loggedIn = false
         }
+        //
         this.state = {
             customers: [],
             filteredCustomers: [],
@@ -122,6 +123,7 @@ class App extends Component {
         let customers = result.map(customer => {
             return (
                 <tr key={customer.id}>
+
                     <div className='container'>
                         <div className='row'>
                            <td className='col-1'><input type='checkbox' value={customer.checked} /></td>
@@ -157,7 +159,7 @@ class App extends Component {
                <div className='col'> 
                   <nav className="navbar navbar-dark navbar-expand-sm fixed-top">
                   <ul className="navbar-nav mr-auto">
-                        <li className="nav-item active"><a class="nav-link" href="#"><span class="fa fa-home fa-lg"></span>111IT Marketing </a></li>
+                        <li className="nav-item active"><a class="nav-link" href="#"><span className="fa fa-home fa-lg"></span>111IT Marketing </a></li>
                      
                  </ul>
                 <span className="navbar-text">
@@ -416,8 +418,8 @@ class App extends Component {
                     </ModalFooter>
                 </Modal>
                 <nav className="navbar navbar-dark navbar-expand-sm fixed-bottom">
-                    <footer> 
-                         <small>&copy; Copyright 2020, 111it services </small> 
+                    <footer id='foot'> 
+                         <small>&copy; Copyright 2020, All right reserved </small> 
                     </footer>
                 </nav>
               </div>
