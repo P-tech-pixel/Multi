@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link, Redirect } from 'react-router-dom'
 import {
     Table,
     Button,
@@ -36,9 +37,10 @@ class App extends Component {
             },
             newCustomerModal: false,
             editCustomerModal: false
-        };
+        }
 
-        this.temp = '123';
+        this.temp = '123'
+        
     }
     componentDidMount() {
       this._refreshCustomers();
