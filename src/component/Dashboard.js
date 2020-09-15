@@ -17,6 +17,13 @@ import './Dashboard.css'
 class App extends Component {
     constructor(props) {
         super(props);
+        // login section 
+        const token =localStorage.getItem("token")
+
+        let loggedIn = true
+        if(token == null){
+            loggedIn = false
+        }
         this.state = {
             customers: [],
             filteredCustomers: [],
@@ -25,6 +32,7 @@ class App extends Component {
                 email: '',
                 phone: '',
                 checked: false
+                
             },
             searchData: {
                 name: ''
@@ -36,7 +44,8 @@ class App extends Component {
                 phone: ''
             },
             newCustomerModal: false,
-            editCustomerModal: false
+            editCustomerModal: false,
+            loggedIn //this define wheather the user is logged in or not.
         }
 
         this.temp = '123'
@@ -102,6 +111,8 @@ class App extends Component {
         });
     }
     render() {
+       
+
         let result;
         if (this.state.filteredCustomers.length !== 0) {
             result = this.state.filteredCustomers;
@@ -136,17 +147,21 @@ class App extends Component {
                 </tr>
             );
         });
+         //login section (user cannot go to dashboard without logging, if the user tries to go to https://...../dashboard, then it will direct to the login page. )
+         if(this.state.loggedIn === false){
+            return <Redirect to='/'></Redirect> 
+        }
         // main render return ....
         return (
             <div className="App container">
                <div className='col'> 
                   <nav className="navbar navbar-dark navbar-expand-sm fixed-top">
                   <ul className="navbar-nav mr-auto">
-                        <li className="nav-item active"><a class="nav-link" href="#"><span class="fa fa-home fa-lg"></span>Multi Dynamic </a></li>
+                        <li className="nav-item active"><a class="nav-link" href="#"><span class="fa fa-home fa-lg"></span>111IT Marketing </a></li>
                      
                  </ul>
                 <span className="navbar-text">
-                    <button id='loginBtn' type="button" class="btn header-button" data-toggle="modal" href="#loginModel">Logout</button>
+                    <Link to='/logout'> Logout</Link>
                 </span>
                 </nav>
               <header className= "jumbotron">
@@ -400,7 +415,11 @@ class App extends Component {
                         </Button>
                     </ModalFooter>
                 </Modal>
-                <nav className="navbar navbar-dark navbar-expand-sm fixed-bottom"></nav>
+                <nav className="navbar navbar-dark navbar-expand-sm fixed-bottom">
+                    <footer> 
+                         <small>&copy; Copyright 2020, 111it services </small> 
+                    </footer>
+                </nav>
               </div>
             </div>
         );

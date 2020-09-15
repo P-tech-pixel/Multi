@@ -27,7 +27,7 @@ class Login extends Component{
         e.preventDefault()
         const {username, password} = this.state
         //logic magic
-        if(username === "A" && password === "B"){
+        if(username === "prashanta927pandit@gmail.com" && password === "Password1"){
             localStorage.setItem ("token", "shgdsgdjghsdjghs")
             this.setState({
                 loggedIn: true
@@ -38,7 +38,7 @@ class Login extends Component{
 
 render(){
     if(this.state.loggedIn){
-        return <Redirect to="/admin"/>
+        return <Redirect to="/dashboard"/>
     }
 
     return(
