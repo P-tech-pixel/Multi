@@ -12,19 +12,11 @@ import {
     Input
 } from 'reactstrap';
 import axios from 'axios';
-import './Dashboard.css'
+import './CustomerDashboard.css'
 
-class App extends Component {
+class CustomerDashboard extends Component {
     constructor(props) {
         super(props);
-        // login section 
-        const token =localStorage.getItem("token")
-
-        let loggedIn = true
-        if(token == null){
-            loggedIn = false
-        }
-        //
         this.state = {
             customers: [],
             filteredCustomers: [],
@@ -46,7 +38,6 @@ class App extends Component {
             },
             newCustomerModal: false,
             editCustomerModal: false,
-            loggedIn //this define wheather the user is logged in or not.
         }
 
         this.temp = '123'
@@ -149,23 +140,30 @@ class App extends Component {
                 </tr>
             );
         });
-         //login section (user cannot go to dashboard without logging, if the user tries to go to https://...../dashboard, then it will direct to the login page. )
-         if(this.state.loggedIn === false){
-            return <Redirect to='/'></Redirect> 
-        }
+
         // main render return ....
         return (
             <div className="App container">
                <div className='col'> 
-                  <nav className="navbar navbar-dark navbar-expand-sm fixed-top">
+               <nav className="navbar navbar-dark navbar-expand-sm fixed-top">
                   <ul className="navbar-nav mr-auto">
-                        <li className="nav-item active"><a class="nav-link" href="#"><span className="fa fa-home fa-lg"></span>111IT Marketing </a></li>
+                       <Link className="nav-link" to="/dashboard">111IT Marketing</Link>
                      
                  </ul>
                 <span className="navbar-text">
-                    <Link to='/logout'> Logout</Link>
+                    <Link className="nav-link"  to='/logout'> Logout</Link>
                 </span>
                 </nav>
+                <nav className="navbar navbar-expand-sm bg-light">
+                      <ul className="navbar-nav">
+                        <span className="nav-item active">
+                            <Link className="nav-link" to="/customerDashboard">Customer Details<span className="sr-only">(current)</span></Link>
+                        </span>
+                        <span className="nav-item">
+                            <Link className="nav-link" to="/productDashboard">Product Details</Link>
+                        </span>
+                      </ul>
+                    </nav>
               <header className= "jumbotron">
                  <div className= "container">
                     <div className= "row row-header">
@@ -428,5 +426,4 @@ class App extends Component {
     }
 }
 
-export default App;
-
+export default CustomerDashboard;

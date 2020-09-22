@@ -1,0 +1,54 @@
+#addBtn{
+  background-color: #4682b4;
+  border: none;
+}
+#addBtn:hover{
+  background-color: #305a7c;
+}
+.App{
+    padding-top: 120px;
+}
+  .table-wrapper-scroll-y {
+  display: block;
+  }
+  .table-fixed thead {
+    width: 97%;
+    color:black;
+  }
+  .table-fixed tbody {
+    height: 300px;
+    overflow-y: auto;
+    width: 100%;
+  }
+  .table-fixed thead, .table-fixed tbody, .table-fixed tr, .table-fixed td, .table-fixed th {
+    display: block;
+  }
+  .table-fixed tbody td, .table-fixed thead > tr> th {
+    float: left;
+    border-bottom-width: 0;
+  }
+  .jumbotron{
+    padding: 70px 30px 70px 30px;
+    margin: 0px auto;
+    height: 20px;
+  }
+  .navbar-dark{
+    background-color:#105288;
+}
+#loginBtn{
+  color: white ;
+}
+.sortBtn{
+  width: 90px;
+  height: 55px;
+  font-size: x-small;
+  margin: -10px;
+}
+#para{
+  text-align: center;
+}
+#foot{
+    color: white;
+    text-align: center;
+    padding-left: 600px;
+}

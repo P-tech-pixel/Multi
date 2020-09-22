@@ -50,24 +50,6 @@ render(){
                  </ul>
                 </nav>
                     <div>
-
-                        
-                             {/* <h1> Login </h1>
-                              <form onSubmit ={this.submitForm}>
-                                  <div className='form-group'>
-                                      <label for='inputEmail'>User Name</label>
-                                      <input type='text' className='form-control' placeholder='username' name='username' value={this.state.username} onChange={this.onChange}/>
-                                  </div>
-                                  <div className='form-group'>
-                                      <label for='inputPassword'>Password</label>
-                                      <input type='password' className='form-control' placeholder='password' name='password' value={this.state.password} onChange={this.onChange}/>   
-                                  </div>
-                                  <div className='form-group'>
-                                      <button className="my-3 btn-block" color='primary' type='submit' >Sign in </button>
-                                  </div>
-                           
-                             </form> */}
-
                             <div className="container">
                                 <div className="row">
                                 <div className="col-sm-9 col-md-7 col-lg-5 mx-auto">
@@ -91,10 +73,10 @@ render(){
                                         </div>
                                         <button className="btn btn-lg btn-primary btn-block text-uppercase" type="submit">Sign in</button>
                                         <hr className="my-4"/>
-                                      
                                         </form>
                                     </div>
                                     </div>
+                                    <button type="button" className='btn btn-link'>Create a new account</button> 
                                 </div>
                                 </div>
                             </div>

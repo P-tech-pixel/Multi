@@ -1,20 +1,23 @@
 import React, { Component } from 'react'
 import { BrowserRouter, Link, Switch, Route } from 'react-router-dom'
-import Dashboard from './component/Dashboard'
 import Login from './component/login'
-import Admin from './component/admin'
 import Logout from './component/logout'
+import Dash from './component/Dash'
+import CustomerDashboard from './component/CustomerDashboard'
+import ProductDashboard from './component/ProductDashboard'
 
 class App extends Component {
     render(){
         return(
             <div>
-                {/*<Dashboard />*/}
                 <BrowserRouter>
                 <Switch>
                     <Route exact path='/' component={Login} />
-                    <Route path='/dashboard' component={Dashboard} />
+                    <Route path='/dashboard' component={Dash} />
                     <Route path='/logout' component={Logout} />
+                    <Route path='/customerDashboard' component={CustomerDashboard} />
+                    <Route path='/productDashboard' component={ProductDashboard} />
+
 
                 </Switch>
                 </BrowserRouter>
